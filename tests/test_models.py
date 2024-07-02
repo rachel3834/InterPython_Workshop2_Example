@@ -1,6 +1,8 @@
 """Tests for statistics functions within the Model layer."""
 
 import pandas as pd
+import numpy as np
+import pytest
 
 def test_max_mag_integers():
     # Test that max_mag function works for integers
@@ -25,3 +27,31 @@ def test_max_mag_zeros():
     test_output = 0
 
     assert max_mag(test_input_df, test_input_colname) == test_output
+
+def test_mean_mag():
+    # Test that mean_mag function works for ones
+    from lcanalyzer.models import mean_mag
+
+    test_input_df = pd.DataFrame(data=np.ones((3,3)), columns=list("abc"))
+    test_input_colname = "b"
+    test_output = 1.0
+
+    assert mean_mag(test_input_df, test_input_colname) == test_output
+
+def test_min_mag():
+    # Test that max_mag function works for integers
+    from lcanalyzer.models import min_mag
+
+    test_input_df = pd.DataFrame(data=np.ones((3,3)), columns=list("abc"))
+    test_input_colname = "a"
+    test_output = 1.0
+
+    assert min_mag(test_input_df, test_input_colname) == test_output
+
+def test_max_mag_strings():
+    # Test for TypeError when passing a string
+    from lcanalyzer.models import max_mag
+
+    test_input_colname = "b"
+    with pytest.raises(TypeError):
+        error_expected = max_mag('string', test_input_colname)
